@@ -29,7 +29,7 @@
       // Tag de versão da migração atual
       "tag": "v1",
       // Lista de novas classes de Durable Objects adicionadas nesta versão
-      "new_classes": [
+      "new_sqlite_classes": [
         "GameRoom"
       ]
     }
