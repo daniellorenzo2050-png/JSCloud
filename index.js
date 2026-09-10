@@ -2,6 +2,16 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
+    // Exporte a classe GameRoom juntamente com o default object
+export class GameRoom {
+  constructor(state, env) {
+    this.state = state;
+    this.env = env;
+    this.sessions = [];
+  }
+  // ... restante do código da classe GameRoom ...
+}
+
     // Configuração de CORS para permitir requisições do cliente
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
