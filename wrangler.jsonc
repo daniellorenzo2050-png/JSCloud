@@ -1,0 +1,37 @@
+{
+  // Schema oficial para validação e auto-completar do Wrangler no editor
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Nome do seu Cloudflare Worker (identificador do projeto na sua conta)
+  "name": "ws-00e",
+
+  // Caminho para o arquivo principal de código que contém o worker e os Durable Objects
+  "main": "index.js",
+
+  // Data de compatibilidade da API da Cloudflare Workers
+  "compatibility_date": "2026-03-01",
+
+  // Configuração dos Durable Objects para gerenciar o estado das salas e o chat multiplayer
+  "durable_objects": {
+    "bindings": [
+      {
+        // Nome da variável de ambiente acessível no código via env.GAME_ROOM
+        "name": "GAME_ROOM",
+        // Nome da classe exportada no seu código JavaScript que lida com o estado da sala
+        "class_name": "GameRoom"
+      }
+    ]
+  },
+
+  // Migrações necessárias pela Cloudflare para registrar e atualizar classes de Durable Objects
+  "migrations": [
+    {
+      // Tag de versão da migração atual
+      "tag": "v1",
+      // Lista de novas classes de Durable Objects adicionadas nesta versão
+      "new_classes": [
+        "GameRoom"
+      ]
+    }
+  ]
+}
