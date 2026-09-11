@@ -12,7 +12,7 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    if (url.pathname === '/auth/login' && request.method === 'POST') {
+        if (url.pathname === '/auth/login' && request.method === 'POST') {
       try {
         const body = await request.json();
         const { userId, username } = body;
@@ -23,6 +23,28 @@ export default {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
           });
         }
+
+        if (!env.JWT_PRIVATE_KEY) {
+          return new Response(JSON.stringify({ error: 'Configuração ausente: JWT_PRIVATE_KEY não definida no Worker.' }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+
+        const token = await generateEd25519JWT({ userId, username }, env.JWT_PRIVATE_KEY);
+        
+        return new Response(JSON.stringify({ token }), {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: 'Erro interno ao gerar token: ' + e.message }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
 
         const token = await generateEd25519JWT({ userId, username }, env.JWT_PRIVATE_KEY);
         
